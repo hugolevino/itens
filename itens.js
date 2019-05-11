@@ -188,14 +188,22 @@ async function query(real_cnpj, qty_itens) {
   var today = new Date();
   var today = today.toISOString();
   
-  const query = 'INSERT INTO `bigdata-bernard.my_new_dataset.robo_mystique_qty_itens` (cnpj, qty) VALUES (' + cnpj_to_insert + ', ' + qty_to_insert + ')';
-  bigqueryClient.query(query, function(err, rows) {
-        if (err) {
-           console.log(err);
-  	}else{
-	    console.log('sucesso');
-	}
-  });
+  //const query = 'INSERT INTO `bigdata-bernard.my_new_dataset.robo_mystique_qty_itens` (cnpj, qty) VALUES (' + cnpj_to_insert + ', ' + qty_to_insert + ')';
+  //bigqueryClient.query(query, function(err, rows) {
+  //      if (err) {
+  //        console.log(err);
+  //	}else{
+  //	    console.log('sucesso');
+  //	}
+  //});
+  var teste_agora = new Array();
+  teste.cnpj = cnpj_to_insert;
+  teste.qty = qty_to_insert;
+	
+  await bigquery
+  	.dataset('my_new_dataset')
+        .table('robo_mystique_qty_itens')
+  	.insert(teste);
   
   //try {
   //    const [job] = await bigqueryClient.createQueryJob(options);
