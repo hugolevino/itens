@@ -191,10 +191,14 @@ async function query(real_cnpj, qty_itens) {
     query: query,
     location: 'US',
   };
-
-  const [job] = await bigqueryClient.createQueryJob(options);
-
-  rows = await job.getQueryResults();
+  
+  try {
+      const [job] = await bigqueryClient.createQueryJob(options);
+      rows = await job.getQueryResults();
+  } catch(e) {
+			return;
+      console.log(count_row + ' --> ERRO INSERTING ON BIGQUERY');
+	}
   
 }
 
