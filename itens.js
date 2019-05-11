@@ -190,9 +190,11 @@ async function query(real_cnpj, qty_itens) {
   
   const query = 'INSERT INTO `bigdata-bernard.my_new_dataset.robo_mystique_qty_itens` (cnpj, qty) VALUES (' + cnpj_to_insert + ', ' + qty_to_insert + ')';
   bigqueryClient.query(query, function(err, rows) {
-        if (!err) {
-           console.log('ERROS');
-  	}
+        if (err) {
+           console.log(err);
+  	}else{
+	    console.log('sucesso');
+	}
   });
   
   //try {
