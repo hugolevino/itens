@@ -123,6 +123,31 @@ async function queueing(){
 
 
 
+
+async function requeueing(data_to_requeue){
+
+    var payload = data_to_requeue;
+    task.appEngineHttpRequest.body = Buffer.from(payload).toString('base64');
+    const request = {
+        parent: parent,
+        task: task,
+    };
+
+    try {
+        const [response] = await client.createTask(request);
+        console.log(count_row + ' --> QUEUED');
+    } catch(e) {
+        return;
+        console.log(count_row + ' --> ERRO QUEUED');
+    }
+
+}
+
+
+
+
+
+
 app.post('/listening', (req, res) => {
   
     var cnpj = req.body;
@@ -170,7 +195,7 @@ app.post('/listening', (req, res) => {
     })
     .catch(function (response) {
         console.log('Tarefa não executada, requeuing -> ' + response.options.headers.teste);
-        queueing(response.options.headers.teste);
+        requeueing(response.options.headers.teste);
         res.status(400);
         res.send('Tarefa não executada, requeuing');
         res.end();
