@@ -198,9 +198,9 @@ async function query(real_cnpj, qty_itens) {
       const [job] = await bigqueryClient.createQueryJob(options);
       rows = await job.getQueryResults();
   } catch(e) {
-			return;
-      console.log(count_row + ' --> ERRO INSERTING ON BIGQUERY');
-	}
+      console.log(e);
+      return;
+  }
   
 }
 
