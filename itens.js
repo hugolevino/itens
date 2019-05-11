@@ -188,6 +188,10 @@ async function query(real_cnpj, qty_itens) {
   var today = new Date();
   var today = today.toISOString();
   
+  const bigquery = new BigQuery({
+  	projectId: 'bigdata-bernard'
+  });
+  
   //const query = 'INSERT INTO `bigdata-bernard.my_new_dataset.robo_mystique_qty_itens` (cnpj, qty) VALUES (' + cnpj_to_insert + ', ' + qty_to_insert + ')';
   //bigqueryClient.query(query, function(err, rows) {
   //      if (err) {
