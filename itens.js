@@ -64,48 +64,20 @@ async function query_inicial(){
 
 async function queueing(){
 
-  if(count_row < final_list.length){
-    for (i = 0; i < 5; i++) {
-      if(count_row < final_list.length){
-        
-        var payload = final_list[count_row];
-        task.appEngineHttpRequest.body = Buffer.from(payload).toString('base64');
-        const request = {
-            parent: parent,
-            task: task,
-        };
+	for (i = 0; i < final_list.length; i++) {
+		var payload = final_list[i];
+		task.appEngineHttpRequest.body = Buffer.from(payload).toString('base64');
+		const request = {
+		    parent: parent,
+		    task: task,
+		}
+		try {
+			const [response] = await client.createTask(request);
+		} catch(e) {
+			return;
+		}
+	}
 
-        try {
-          const [response] = await client.createTask(request);
-          //console.log(count_row + ' --> QUEUED');
-          } catch(e) {
-          return;
-          //console.log(count_row + ' --> ERRO QUEUED');
-
-          }
-
-         
-        count_row++;
-      }else{
-        if(im_first == 'n'){
-          im_first = 's';
-          setTimeout(function(){
-            query_inicial();
-          }, 15000);
-        } 
-      }
-    }
-    setTimeout(function(){
-       queueing();
-    }, 1000);
-  }else{
-    if(im_first == 'n'){
-      im_first = 's';
-      setTimeout(function(){
-        query_inicial();
-      }, 15000);
-    }
-  }
 }
 
 
