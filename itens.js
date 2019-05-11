@@ -169,7 +169,7 @@ app.post('/listening', (req, res) => {
 
     })
     .catch(function (response) {
-        console.log('Tarefa não executada, requeuing -> ' + response.options.headers.teste);
+        console.log('Tarefa não executada, requeuing -> ' + response);
         //queueing(response.options.headers.teste);
         res.status(400);
         res.send('Tarefa não executada, requeuing');
