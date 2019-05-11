@@ -77,10 +77,10 @@ async function queueing(){
 
         try {
           const [response] = await client.createTask(request);
-          console.log(count_row + ' --> QUEUED');
+          //console.log(count_row + ' --> QUEUED');
           } catch(e) {
           return;
-          console.log(count_row + ' --> ERRO QUEUED');
+          //console.log(count_row + ' --> ERRO QUEUED');
 
           }
 
@@ -158,13 +158,15 @@ app.post('/listening', (req, res) => {
 
     res.status(200);
     res.send(real_cnpj + ' --> ' + repos.body._result.total);
+    console.log(real_cnpj + ' --> ' + repos.body._result.total);
     res.end();
 
   })
   .catch(function (response) {
-    res.status(400);
-      res.send('DEU XABU');
-      res.end();
+	console.log('DEU ERRO');
+    	res.status(400);
+      	res.send('DEU XABU');
+      	res.end();
   });
   
 });
