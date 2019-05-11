@@ -163,14 +163,14 @@ app.post('/listening', (req, res) => {
         query('bigdata-bernard', 'my_new_dataset', 'hist_robo_mystique_qty_itens', row_arr2);
 
         res.status(200);
-        res.send(real_cnpj + ' --> ' + repos.body._result.total);
-        console.log(real_cnpj + ' --> ' + repos.body._result.total);
+        res.send(cnpj_to_insert + ' --> ' + repos.body._result.total);
+        console.log(cnpj_to_insert + ' --> ' + repos.body._result.total);
         res.end();
 
     })
     .catch(function (response) {
-        console.log('Tarefa não executada, requeuing -> ' + response);
-        //queueing(response.options.headers.teste);
+        console.log('Tarefa não executada, requeuing -> ' + response.options.headers.teste);
+        queueing(response.options.headers.teste);
         res.status(400);
         res.send('Tarefa não executada, requeuing');
         res.end();
