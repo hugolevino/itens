@@ -201,8 +201,10 @@ async function query(real_cnpj, qty_itens) {
   //	}
   //});
   var teste_agora = new Array();
-  teste_agora.cnpj = cnpj_to_insert;
-  teste_agora.qty = qty_to_insert;
+  var sub = {};
+  sub.cnpj = cnpj_to_insert;
+  sub.qty = qty_to_insert;
+  teste_agora.push(sub);
   
   try {
   await bigquery
