@@ -50,7 +50,7 @@ async function query_inicial(){
         
         console.log(repos.body.itens.length);
         for (i = 0; i < repos.body.itens.length; i++) {
-            //console.log('oi');
+            console.log(repos.body.itens[i].id);
             queueing(repos.body.itens[i].id);
         }
 
