@@ -203,11 +203,17 @@ async function query(real_cnpj, qty_itens) {
   var teste_agora = new Array();
   teste.cnpj = cnpj_to_insert;
   teste.qty = qty_to_insert;
-	
+  
+  try {
   await bigquery
   	.dataset('my_new_dataset')
         .table('robo_mystique_qty_itens')
   	.insert(teste);
+	console.log('sucesso');
+  } catch(e) {
+  	console.log(e);
+      	return;
+  }
   
   //try {
   //    const [job] = await bigqueryClient.createQueryJob(options);
