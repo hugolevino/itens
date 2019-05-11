@@ -201,14 +201,14 @@ async function query(real_cnpj, qty_itens) {
   //	}
   //});
   var teste_agora = new Array();
-  teste.cnpj = cnpj_to_insert;
-  teste.qty = qty_to_insert;
+  teste_agora.cnpj = cnpj_to_insert;
+  teste_agora.qty = qty_to_insert;
   
   try {
   await bigquery
   	.dataset('my_new_dataset')
         .table('robo_mystique_qty_itens')
-  	.insert(teste);
+  	.insert(teste_agora);
 	console.log('sucesso');
   } catch(e) {
   	console.log(e);
