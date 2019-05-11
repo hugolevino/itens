@@ -186,7 +186,7 @@ async function query(real_cnpj, qty_itens) {
   var today = new Date();
   var today = today.toISOString();
 
-  const query = 'INSERT INTO `bigdata-bernard.my_new_dataset.robo_mystique_qty_itens` (cnpj, qty) VALUES (' + cnpj_to_insert + ', "' + qty_to_insert + '")';
+  const query = 'INSERT INTO `bigdata-bernard.my_new_dataset.robo_mystique_qty_itens` (cnpj, qty) VALUES (' + cnpj_to_insert + ', ' + qty_to_insert + ')';
   const options = {
     query: query,
     location: 'US',
