@@ -47,8 +47,10 @@ async function query_inicial(){
         json: true
     };
     rp(options).then(async function (repos) {
-
+        
+        console.log(repos.body.itens.length);
         for (i = 0; i < repos.body.itens.length; i++) {
+            //console.log('oi');
             queueing(repos.body.itens[i].id);
         }
 
@@ -80,6 +82,7 @@ async function queueing(task_to_be_done){
     try {
         const [response] = await client.createTask(request);
     } catch(e) {
+        console.log(e);
         return;
     }
 }
