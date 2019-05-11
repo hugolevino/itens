@@ -104,17 +104,26 @@ app.post('/listening', (req, res) => {
     };
      
     rp(options).then(function (repos) {
-
+        
+        var today = new Date();
+        var today = today.toISOString();
         var cnpj_to_insert = parseInt(repos.request.headers.teste);
         var qty_to_insert = parseInt(repos.body._result.total);
-
+        
         var row_arr = new Array();
         var sub_row = {};
         sub_row.cnpj = cnpj_to_insert;
         sub_row.qty = qty_to_insert;
         row_arr.push(sub_row);
-
         query('bigdata-bernard', 'my_new_dataset', 'robo_mystique_qty_itens', row_arr);
+
+        var row_arr2 = new Array();
+        var sub_row2 = {};
+        sub_row2.dia = today;
+        sub_row2.cnpj = cnpj_to_insert;
+        sub_row2.qty = qty_to_insert;
+        row_arr2.push(sub_row2);
+        query('bigdata-bernard', 'my_new_dataset', 'hist_robo_mystique_qty_itens', row_arr2);
 
         res.status(200);
         res.send(real_cnpj + ' --> ' + repos.body._result.total);
