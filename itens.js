@@ -15,6 +15,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.text());
 
 
+var final_list = new Array();
+var count_row = 0;
+var im_first = 'n';
+
 
 const task = {
     appEngineHttpRequest: {
@@ -50,8 +54,7 @@ async function query_inicial(){
         
         console.log(repos.body.itens.length);
         for (i = 0; i < repos.body.itens.length; i++) {
-            console.log(repos.body.itens[i].id);
-            queueing(repos.body.itens[i].id);
+            final_list.push(repos.body.itens[i].id);
         }
 
         var today = new Date();
@@ -64,6 +67,7 @@ async function query_inicial(){
         row_arr.push(sub_row);
         
         query('bigdata-bernard', 'my_new_dataset', 'job_robo_mystique_qty_itens', row_arr);
+        queueing();
 
     })
     .catch(function (err) {
@@ -72,19 +76,49 @@ async function query_inicial(){
 }
 
 
-async function queueing(task_to_be_done){
-    var payload = task_to_be_done;
-    task.appEngineHttpRequest.body = Buffer.from(payload).toString('base64');
-    const request = {
-        parent: parent,
-        task: task,
+async function queueing(){
+
+    if(count_row < final_list.length){
+        for (i = 0; i < 10; i++) {
+            if(count_row < final_list.length){
+        
+                var payload = final_list[count_row];
+                task.appEngineHttpRequest.body = Buffer.from(payload).toString('base64');
+                const request = {
+                    parent: parent,
+                    task: task,
+                };
+
+                try {
+                    const [response] = await client.createTask(request);
+                    console.log(count_row + ' --> QUEUED');
+                } catch(e) {
+                    return;
+                    console.log(count_row + ' --> ERRO QUEUED');
+                }
+
+                count_row++;
+            }else{
+                if(im_first == 'n'){
+                    im_first = 's';
+                    setTimeout(function(){
+                        query();
+                    }, 15000);
+                } 
+            }
+        }
+        setTimeout(function(){
+            queueing();
+        }, 5000);
+    }else{
+        if(im_first == 'n'){
+            im_first = 's';
+            setTimeout(function(){
+                query();
+            }, 15000);
+        }
     }
-    try {
-        const [response] = await client.createTask(request);
-    } catch(e) {
-        console.log(e);
-        return;
-    }
+
 }
 
 
