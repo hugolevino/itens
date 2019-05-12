@@ -79,7 +79,7 @@ async function query_inicial(){
 async function queueing(){
 
     if(count_row < final_list.length){
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 5; i++) {
             if(count_row < final_list.length){
         
                 var payload = final_list[count_row];
@@ -109,7 +109,7 @@ async function queueing(){
         }
         setTimeout(function(){
             queueing();
-        }, 5000);
+        }, 1000);
     }else{
         if(im_first == 'n'){
             im_first = 's';
@@ -195,7 +195,7 @@ app.post('/listening', (req, res) => {
     })
     .catch(function (response) {
         console.log('Tarefa não executada, requeuing -> ' + response.options.headers.teste);
-        requeueing(response.options.headers.teste);
+        //requeueing(response.options.headers.teste);
         res.status(400);
         res.send('Tarefa não executada, requeuing');
         res.end();
